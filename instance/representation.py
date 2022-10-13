@@ -10,4 +10,4 @@ class Node:
 
 @dataclass(frozen=True)
 class Representation:
-    verticies_array: list[list[Node]]
+    verticies_array: list[Node]
