@@ -3,11 +3,11 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Node:
-    x: int
-    y: int
     city_index: int
+    x: float
+    y: float
 
 
 @dataclass(frozen=True)
 class Representation:
-    verticies_array: list[Node]
+    nodes_array: list[Node]
