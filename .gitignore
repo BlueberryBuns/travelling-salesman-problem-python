@@ -3,3 +3,5 @@ __pycache__/
 .vscode/
 source/
 *.whl
+
+.pytest_cache

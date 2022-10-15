@@ -1,7 +1,16 @@
+import logging
+from pathlib import Path
 from loader import InstanceLoader
+from logging_setup import logging_setup
 
-loader = InstanceLoader()
+def main():
+    input_file = Path("example_instances/berlin11_modified.tsp")
+    loader = InstanceLoader()
+    representation = loader.load(input_file)
+    print(representation.verticies_list)
 
-representation = loader.load(".\\source\\berlin11_modified.tsp")
+    logging_setup()
+    logging.info("Test message")
 
-print(representation.nodes_array)
+if __name__ == "__main__":
+    main()
