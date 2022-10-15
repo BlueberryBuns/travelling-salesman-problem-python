@@ -1,16 +1,16 @@
-<<<<<<< HEAD
-from loader import InstanceLoader
-
-loader = InstanceLoader()
-
-representation = loader.load(".\\source\\berlin11_modified.tsp")
-
-print(representation.nodes_array)
-=======
 import logging
+from pathlib import Path
+from loader import InstanceLoader
 from logging_setup import logging_setup
 
-if __name__ == "__main__":
+def main():
+    input_file = Path("example_instances/berlin11_modified.tsp")
+    loader = InstanceLoader()
+    representation = loader.load(input_file)
+    print(representation.verticies_list)
+
     logging_setup()
     logging.info("Test message")
->>>>>>> ba815bf (Add array representation of graph)
+
+if __name__ == "__main__":
+    main()
