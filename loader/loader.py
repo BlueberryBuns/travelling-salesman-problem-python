@@ -11,7 +11,7 @@ class InstanceLoader:
             raw_nodes = splitted_body[1]
 
             representation = Representation(
-                nodes_array = self._get_verticies(raw_nodes)
+                verticies_list = self._get_verticies(raw_nodes)
             )
 
             return representation
@@ -28,7 +28,7 @@ class InstanceLoader:
             splitted_line = line.split(" ")
 
             node = Node(
-                city_index = int(splitted_line[0]),
+                index = int(splitted_line[0]),
                 x = float(splitted_line[1]),
                 y = float(splitted_line[2])
             )
