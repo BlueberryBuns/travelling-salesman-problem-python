@@ -2,8 +2,8 @@ from instance import Representation, Node
 
 SPLITTER = "NODE_COORD_SECTION"
 
-class InstanceLoader:
 
+class InstanceLoader:
     def load(self, file: str) -> Representation:
         with open(file) as f:
             file_body = f.read()
@@ -11,7 +11,7 @@ class InstanceLoader:
             raw_nodes = splitted_body[1]
 
             representation = Representation(
-                verticies_list = self._get_verticies(raw_nodes)
+                verticies_list=self._get_verticies(raw_nodes)
             )
 
             return representation
@@ -28,10 +28,10 @@ class InstanceLoader:
             splitted_line = line.split(" ")
 
             node = Node(
-                index = int(splitted_line[0]),
-                x = float(splitted_line[1]),
-                y = float(splitted_line[2])
+                index=int(splitted_line[0]),
+                x=float(splitted_line[1]),
+                y=float(splitted_line[2]),
             )
             nodes.append(node)
-            
+
         return nodes

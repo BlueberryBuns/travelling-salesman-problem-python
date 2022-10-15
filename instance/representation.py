@@ -27,7 +27,7 @@ class ArrayRepresentation:
         return distance
 
     def _create_cities_matrix(self, representation: Representation) -> np.ndarray:
-        size = len(representation.verticies_array)
+        size = len(representation.verticies_list)
         return np.empty((size, size))
 
     @staticmethod
@@ -36,10 +36,9 @@ class ArrayRepresentation:
 
     def _populate_matrix(self, representation: Representation) -> np.ndarray:
         distance_matix = self._create_cities_matrix(representation)
-        for city in representation.verticies_array:
-            for neighbour in representation.verticies_array:
-                distance_matix[city.index][
-                    neighbour.index
-                ] = self._calculate_distance(city, neighbour)
+        for city in representation.verticies_list:
+            for neighbour in representation.verticies_list:
+                distance_matix[city.index][neighbour.index] = self._calculate_distance(
+                    city, neighbour
+                )
         return self.convert_to_array_int(distance_matix)
-
