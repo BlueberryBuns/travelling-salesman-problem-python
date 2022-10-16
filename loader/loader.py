@@ -31,18 +31,10 @@ class InstanceLoader:
                 continue
 
             splitted_line = line.split(" ")
-<<<<<<< HEAD
             node = (
                 int(splitted_line[0]) - 1,
                 float(splitted_line[1]),
                 float(splitted_line[2]),
-=======
-
-            node = Node(
-                index=int(splitted_line[0])-1, # indexing in the instance file starts from 1
-                x=float(splitted_line[1]),
-                y=float(splitted_line[2]),
->>>>>>> 882199a (Mutate-class)
             )
             nodes.append(node)
         return np.array(nodes, dtype=float)
