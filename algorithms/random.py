@@ -1,6 +1,7 @@
 import random
 from instance import Node
 import numpy as np
+import yaml
 
 from instance.representation import MatrixRepresentation, Representation
 
@@ -14,7 +15,7 @@ class RandomAlgorithm:
         min_distance = np.iinfo(np.int64).max
         min_route: list[Node]
 
-        for i in range(1000):
+        for i in range(1000): # to be read from config
             route = self._generate_route(self.representation)
             distance = self._calculate_route_distance(route, self.adjacecny_array)
 
@@ -36,7 +37,7 @@ class RandomAlgorithm:
 
         distance = 0
         for i in range(len(route)):
-            distance += #take it from adjency matrix
+            distance += adjacency_array[i-1][i] #take it from adjency matrix
 
         return distance
 
