@@ -1,6 +1,6 @@
 from functools import cached_property
 from pathlib import Path
-from typing import Any, Union
+from typing import Any
 import yaml
 
 
@@ -18,19 +18,19 @@ class ConfigLoader:
 
     @property
     def _random_algorithm(self) -> Any:
-        return self._config["random_algirithm"]
+        return self._config["random_algorithm"]
 
     @property
     def _genetic_algorithm(self) -> Any:
         return self._config["genetic_algorithm"]
 
-    @property
-    def selected_instances(self) -> str:
-        return self._config["selected_instances"]
+    @cached_property
+    def selected_instances(self) -> list[Path]:
+        return [Path(filename) for filename in self._config["selected_instances"]]
 
     @property
-    def random_no_instances(self):
-        return self._random_algorithm["no_instances"]
+    def random_number_of_instances(self):
+        return self._random_algorithm["number_of_instances"]
 
     @property
     def genetic_executions(self):
@@ -73,5 +73,8 @@ class ConfigLoader:
         return self._genetic_algorithm["mutation_rate"]
 
     @property
-    def logs_output_dir(self):
-        return self._config["logs_output_path"]
+    def logs_output_dir(self) -> Path:
+        return Path(self._config["logs_output_path"])
+
+    def output_file_name(self, testing_instance: Path) -> str:
+        return f"result_{testing_instance.stem}__mutation_method_{self.genetic_mutation_method}_pm_{self.genetic_mutation_rate}__selection_method_{self.genetic_selection_method}_sm_{self.genetic_selection_method}__"

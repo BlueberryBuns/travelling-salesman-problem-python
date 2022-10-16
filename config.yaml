@@ -11,7 +11,7 @@ params:
     - example_instances/berlin11_modified.tsp
     - example_instances/ali535.tsp
   random_algorithm:
-    no_instances: 10_000
+    number_of_instances: 10_000
   genetic_algorithm:
     executions: 10
     population_size: 1000
