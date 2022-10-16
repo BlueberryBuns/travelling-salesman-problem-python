@@ -28,7 +28,11 @@ class InstanceLoader:
             splitted_line = line.split(" ")
 
             node = Node(
+<<<<<<< HEAD
                 index=int(splitted_line[0])-1, # indexing in the instance file starts from 1
+=======
+                index=int(splitted_line[0]) - 1,
+>>>>>>> 45c9268 (Add modified solution handling, update greedy algorithm)
                 x=float(splitted_line[1]),
                 y=float(splitted_line[2]),
             )
