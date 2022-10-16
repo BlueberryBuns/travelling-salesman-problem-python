@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 
 
-class BaseTSPSolver(ABC):
+class BaseTSPAlgorithm(ABC):
     @abstractmethod
     def execute():
         raise NotImplementedError

@@ -2,6 +2,16 @@ from instance import Node
 import numpy as np
 from loader import InstanceLoader
 
+from instance.representation import MatrixRepresentation
+
+
+class RandomAlgorithm:
+    def __init__(self, adjacency_array: MatrixRepresentation):
+        self.adjacecny_array = adjacency_array
+
+    def execute():
+        ...
+
 # functions to be moved to base.py? or what's the base.py purpose?
 # instance or representation?
 class RandomSolver():
