@@ -1,0 +1,26 @@
+params:
+  selected_instances:
+    - example_instances/pr2392.tsp
+    - example_instances/nrw1379.tsp
+    - example_instances/kroA200.tsp
+    - example_instances/gr666.tsp
+    - example_instances/kroA100.tsp
+    - example_instances/kroA150.tsp
+    - example_instances/fl417.tsp
+    - example_instances/berlin52.tsp
+    - example_instances/berlin11_modified.tsp
+    - example_instances/ali535.tsp
+  random_algorithm:
+    no_instances: 10_000
+  genetic_algorithm:
+    executions: 10
+    population_size: 1000
+    generations: 100
+    init_method: "random"  # "greedy" / "random"
+    crosover_method: "PMX"  # "PMX" / "OX"
+    crosover_probability: 0.7
+    tournament_size: 5
+    selection_method: "tournament"  # "tournament" / "roulette"
+    mutation_method: ""  # "swap" / "inverse"
+    mutation_rate: 0.1  # Provide float in range [0,1]
+  logs_output_path: output/
