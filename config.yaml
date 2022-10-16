@@ -3,10 +3,10 @@ params:
     # - example_instances/pr2392.tsp
     # - example_instances/nrw1379.tsp
     # - example_instances/kroA200.tsp
-    # - example_instances/gr666.tsp
+    - example_instances/gr666.tsp
     # - example_instances/kroA100.tsp
     # - example_instances/kroA150.tsp
-    - example_instances/fl417.tsp
+    # - example_instances/fl417.tsp
     # - example_instances/berlin52.tsp
     # - example_instances/berlin11_modified.tsp
     # - example_instances/ali535.tsp
