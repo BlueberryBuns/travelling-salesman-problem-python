@@ -4,6 +4,7 @@ from loader import InstanceLoader
 from loader.config import ConfigLoader
 from logging_setup import logging_setup
 from instance import MatrixRepresentation
+from algorithms import RandomAlgorithm
 
 
 def main():
@@ -21,10 +22,12 @@ def main():
     print(representation.verticies_list)
 
     matrixRep = MatrixRepresentation(representation)
-    print(matrixRep)
+    print(matrixRep.adjacency_matix)
     # import ipdb; ipdb.set_trace()
     # logging_setup()
     # logging.info("Test message")
+    result = RandomAlgorithm(representation, matrixRep).execute()
+    print(result)
 
 
 if __name__ == "__main__":
