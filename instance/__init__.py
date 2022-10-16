@@ -1,1 +1,1 @@
-from .representation import Node, Representation, MatrixRepresentation
+from .representation import MatrixRepresentation  # , Node, Representation,

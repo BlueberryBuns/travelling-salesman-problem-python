@@ -1,22 +1,27 @@
-from instance import Representation, Node
+from functools import cached_property
+import numpy as np
 
-SPLITTER = "NODE_COORD_SECTION"
+from tqdm import tqdm
+# from instance import Representation, Node
+from instance.representation import Repres
 
 
 class InstanceLoader:
-    def load(self, file: str) -> Representation:
-        with open(file) as f:
-            file_body = f.read()
-            splitted_body = file_body.split(SPLITTER)
-            raw_nodes = splitted_body[1]
+    SPLITTER = "NODE_COORD_SECTION"
 
-            representation = Representation(
-                verticies_list=self._get_verticies(raw_nodes)
-            )
+    def __init__(self, filepath: str):
+        self._info_dict = {}
+        with open(filepath) as f:
+            self.file_body = f.read()
+            self.splitted_body = self.file_body.split(self.SPLITTER)
+            self.raw_nodes = self.splitted_body[1]
 
-            return representation
+    def load(self) -> Repres:
+        # representation = Representation(self._get_verticies(self.raw_nodes))
+        representation = Repres(self._get_verticies(self.raw_nodes))
+        return representation
 
-    def _get_verticies(self, raw_nodes: str) -> list[Node]:
+    def _get_verticies(self, raw_nodes: str) -> np.ndarray: #list[Node]:
         nodes = []
 
         for line in raw_nodes.split("\n"):
@@ -26,12 +31,23 @@ class InstanceLoader:
                 continue
 
             splitted_line = line.split(" ")
-
-            node = Node(
-                index=int(splitted_line[0]) - 1,
-                x=float(splitted_line[1]),
-                y=float(splitted_line[2]),
+            node = (
+                int(splitted_line[0]) - 1,
+                float(splitted_line[1]),
+                float(splitted_line[2]),
             )
             nodes.append(node)
+        return np.array(nodes, dtype=float)
 
-        return nodes
+    @cached_property
+    def info_dict(self) -> dict:
+        info_part = self.splitted_body[0].strip()
+        split_parts = info_part.split("\n")
+        for x in split_parts:
+            values = x.split(": ")
+            self._info_dict[values[0]] = values[1]
+        return self._info_dict
+
+    @property
+    def dimension(self) -> int:
+        return int(self.info_dict.get("DIMENSION"))
