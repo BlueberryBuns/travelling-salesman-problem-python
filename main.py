@@ -34,16 +34,7 @@ def main():
     input_file = Path("example_instances/berlin11_modified.tsp")
     loader = InstanceLoader()
     config = ConfigLoader("config.yaml")
-<<<<<<< HEAD
-    # print(config._config)
-    # import ipdb; ipdb.set_trace()
-=======
-    print(config._config)
-    import ipdb
-
-    ipdb.set_trace()
->>>>>>> 45c9268 (Add modified solution handling, update greedy algorithm)
-
+    
     # print(config._config["genetic_algorithm"])
     # print(config._genetic_algorithm)
     # print(config.genetic_crosover_method)
