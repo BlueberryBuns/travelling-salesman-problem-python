@@ -17,11 +17,11 @@ class Mutate:
         if config_value == "swap":
             mutation_rate = 0.01
             instances = self._get_instances_for_mutation(mutation_rate)
-            self._swap(instances)
+            return self._swap(instances)
         elif config_value == "inverse":
             mutation_rate = 0.1
             instances = self._get_instances_for_mutation(mutation_rate)
-            self._inverse(instances)
+            return self._inverse(instances)
 
     def _swap(self, instances: np.ndarray) -> np.ndarray:
         return 0
@@ -64,3 +64,9 @@ class FixtureFactory:
             )
         )
         return sol
+
+#testing
+
+solutionss = FixtureFactory.create_solution()
+
+mutated_solutions = Mutate(solutionss).mutate()
