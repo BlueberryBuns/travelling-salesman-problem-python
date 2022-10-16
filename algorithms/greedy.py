@@ -12,7 +12,7 @@ class GreedyAlgorithm(BaseTSPAlgorithm):
         self, matrix_representation: MatrixRepresentation, solutions: Solutions
     ):
         self.solutions = solutions
-        self.matrix_representation = matrix_representation  
+        self.matrix_representation = matrix_representation
 
     @cached_property
     def cities_count(self) -> int:
@@ -32,7 +32,7 @@ class GreedyAlgorithm(BaseTSPAlgorithm):
         matrix[:, current_city] = np.iinfo(np.int64).max
         return matrix
 
-    def execute(self) -> list[int, Solutions]:
+    def execute(self):
         for starting_city in range(self.cities_count):
             matrix = np.copy(self.adjacency_matrix)
             current_city = starting_city
@@ -42,43 +42,15 @@ class GreedyAlgorithm(BaseTSPAlgorithm):
                 dst = matrix[current_city, :].min()
                 next_city = matrix[current_city, :].argmin()
                 self.solutions.distance_array[starting_city][idx] = dst
-                self.solutions.solution_array[starting_city][idx] = next_city
+                self.solutions.solution_array[starting_city][idx] = current_city
                 matrix = self.remove_visited_cities(matrix, current_city)
-                # matrix[current_city, :] = np.iinfo(np.int64).max
-                # matrix[:, current_city] = np.iinfo(np.int64).max
                 current_city = next_city
 
-            self.solutions.distance_array[starting_city][self.cities_count - 1] = self.adjacency_matrix[current_city, starting_city]
-            self.solutions.solution_array[starting_city][self.cities_count - 1] = next_city
+            self.solutions.distance_array[starting_city][
+                self.cities_count - 1
+            ] = self.adjacency_matrix[current_city, starting_city]
+            self.solutions.solution_array[starting_city][
+                self.cities_count - 1
+            ] = next_city
 
         self.solutions.update_best_solution()
-
-        import ipdb
-
-        ipdb.set_trace()
-
-    def alt_execute(self):
-        best_distance = np.iinfo(np.int64).max
-        for starting_city in range(self.cities_count):
-            visited_cities = []
-            current_city = starting_city
-            for city_idx in range(self.cities_count):
-                visited_cities.append(current_city)
-                remaining_cities = [c for c in self.cities if not c in visited_cities]
-                for i in remaining_cities:
-
-                    # XDDD = self.adjacency_matrix[current_city, remaining_cities]
-                    import ipdb
-
-                    ipdb.set_trace()
-                x = self.adjacency_matrix[
-                    current_city,
-                ]
-                mask = ma.masked_where(
-                    self.adjacency_matrix[current_city, :] > 500,
-                    self.adjacency_matrix[current_city, :],
-                )
-
-                import ipdb
-
-                ipdb.set_trace()

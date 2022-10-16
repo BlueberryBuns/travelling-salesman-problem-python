@@ -1,5 +1,6 @@
 import logging
 from pathlib import Path
+import time
 from algorithms.greedy import GreedyAlgorithm
 from instance.representation import MatrixRepresentation
 from instance.solution import Solutions
@@ -15,11 +16,18 @@ def alt_main():
     config = ConfigLoader("config.yaml")
 
     for selected_instance in config.selected_instances:
-        
+
         matrix_representation = MatrixRepresentation(loader.load(selected_instance))
-        greedy_solution = Solutions(matrix_representation.adjacency_matix.shape[0], instances=100)
-        import ipdb; ipdb.set_trace()
-    # algorithm = GreedyAlgorithm(matrix_representation, )
+        greedy_solutions = Solutions(
+            x := matrix_representation.adjacency_matix.shape[0], instances=x
+        )  # TODO: Chage the approach with x
+        algorithm = GreedyAlgorithm(matrix_representation, greedy_solutions)
+        start = time.time_ns()
+        algorithm.execute()
+        total = time.time_ns() - start
+        import ipdb
+
+        ipdb.set_trace()
 
 
 def main():

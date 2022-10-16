@@ -18,7 +18,9 @@ class FixtureCreator:
     def create_solution(cls) -> Solutions:
         sol = Solutions(cities=5, instances=2)
 
-        import ipdb; ipdb.set_trace()
+        import ipdb
+
+        ipdb.set_trace()
         sol.solution_array = np.array(((0, 1, 2, 3, 4), (1, 4, 3, 2, 0)))
         sol.distance_array = np.array(
             (

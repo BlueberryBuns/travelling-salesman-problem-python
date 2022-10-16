@@ -35,6 +35,6 @@ class Solutions:
         self.distance_array = self.distance_array[soreted_vals]
 
     def update_best_solution(self):
-        if self.best_distance > self.min_value():
-            self.best_distance = self.min_value()
-            self.best_solution = self.solution_array[self.min_arg()]
+        if self.best_distance > self.min_value:
+            self.best_distance = self.min_value
+            self.best_solution = self.solution_array[self.min_arg]
