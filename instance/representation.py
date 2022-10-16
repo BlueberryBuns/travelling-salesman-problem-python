@@ -32,7 +32,8 @@ class MatrixRepresentation:
 
     @staticmethod
     def _convert_to_array_int(array: np.ndarray):
-        return np.rint(array).astype(int)
+        # return np.rint(array).astype(np.int64)
+        return np.rint(array).astype(np.uint64)
 
     def _populate_matrix(self, representation: Representation) -> np.ndarray:
         distance_matix = self._create_cities_matrix(representation)
