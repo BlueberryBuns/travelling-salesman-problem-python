@@ -10,7 +10,7 @@ class Solutions:
         self.best_solution = np.zeros((cities), dtype=np.uint16)
         self.best_distance = np.Inf
         self.solution_array = self._initialize_solution_array(init_method)
-        self.distance_array = np.zeros((instances, cities), dtype=float)
+        self.distance_array = np.zeros((instances, cities), dtype=np.float32)
 
     def _initialize_solution_array(self, method: str):
         try:
@@ -26,8 +26,9 @@ class Solutions:
             (n_instances, n_cities)
         )
         solution_array %= n_cities
+        solution_array = solution_array.astype(np.uint16)
         solution_array = np.random.default_rng().permuted(solution_array, axis=1)
-        return solution_array.astype(np.uint16)
+        return solution_array
 
     def greedy_init(self, n_instances, n_cities):
         if n_cities == n_instances:
@@ -49,7 +50,7 @@ class Solutions:
 
     @cached_property
     def total_length(self) -> np.ndarray:
-        return self.distance_array.sum(axis=1, dtype=np.uint64)
+        return self.distance_array.sum(axis=1, dtype=np.float32)
 
     @cached_property
     def min_value(self):
