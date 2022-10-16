@@ -16,15 +16,17 @@ class Mutate:
 
         if config_value == "swap":
             mutation_rate = 0.01
-            self._swap()
+            instances = self._get_instances_for_mutation(mutation_rate)
+            self._swap(instances)
         else:
             mutation_rate = 0.1
-            self._inverse()
+            instances = self._get_instances_for_mutation(mutation_rate)
+            self._inverse(instances)
 
-    def _swap(self) -> Solutions:
+    def _swap(self, instances: np.ndarray) -> np.ndarray:
         return 0
 
-    def _inverse(self) -> Solutions:
+    def _inverse(self, instances: np.ndarray) -> np.ndarray:
         return 0
 
     # It has not been tested yet!
@@ -38,7 +40,7 @@ class Mutate:
 
 
 
-# to be deleted
+# to be moved
 class FixtureFactory:
     @classmethod
     def create_solution(cls) -> Solutions:
