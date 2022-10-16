@@ -34,7 +34,7 @@ def main():
     input_file = Path("example_instances/berlin11_modified.tsp")
     loader = InstanceLoader()
     config = ConfigLoader("config.yaml")
-    
+
     # print(config._config["genetic_algorithm"])
     # print(config._genetic_algorithm)
     # print(config.genetic_crosover_method)

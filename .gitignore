@@ -5,3 +5,5 @@ source/
 *.whl
 
 .pytest_cache
+
+config.yaml
