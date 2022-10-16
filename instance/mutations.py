@@ -18,7 +18,7 @@ class Mutate:
             mutation_rate = 0.01
             instances = self._get_instances_for_mutation(mutation_rate)
             self._swap(instances)
-        else:
+        elif config_value == "inverse":
             mutation_rate = 0.1
             instances = self._get_instances_for_mutation(mutation_rate)
             self._inverse(instances)
