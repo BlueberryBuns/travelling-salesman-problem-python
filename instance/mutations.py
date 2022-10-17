@@ -19,16 +19,25 @@ class Mutate:
             return self._inverse(instances)
 
     def _swap(self, instances: np.ndarray) -> np.ndarray:
-        return 0
+        for i in instances:
+            indexes = np.random.randint(len(i), size=2) # 2 indexes to be swaped
+            
+        return instances
 
     def _inverse(self, instances: np.ndarray) -> np.ndarray:
-        return 0
+        for i in instances:
+            indexes = np.random.randint(len(i), size=2) # 2 indexes where inversion starts and ends
+
+            
+
+        return instances
 
     # It has not been tested yet!
     def _get_instances_for_mutation(self, rate: float):
 
-        random_ints = np.random.randint(100, len(self.solutions.solution_array))
+        print(len(self.solutions.solution_array))
+        random_ints = np.random.randint(100, size=len(self.solutions.solution_array))
         to_be_mutated = np.where(random_ints<rate*100)
-        instances_for_mutation = self.solutions.solution_array[to_be_mutated, :]
+        instances_for_mutation = self.solutions.solution_array[to_be_mutated, :] # to chyba niepotrzebne, potrzeba tylko indexów?
 
         return instances_for_mutation
