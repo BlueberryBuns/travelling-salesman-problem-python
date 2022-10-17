@@ -19,16 +19,16 @@ class Mutate:
             return self._inverse(instances)
 
     def _swap(self, instances: np.ndarray) -> np.ndarray:
-        for i in instances:
-            indexes = np.random.randint(len(i), size=2) # 2 indexes to be swaped
+        for instance in instances:
+            indexes = np.random.randint(len(instance), size=2) # 2 indexes to be swaped
+            instance = "XD" #swap
             
         return instances
 
     def _inverse(self, instances: np.ndarray) -> np.ndarray:
         for i in instances:
             indexes = np.random.randint(len(i), size=2) # 2 indexes where inversion starts and ends
-
-            
+            instance = "XD" #inverse
 
         return instances
 
