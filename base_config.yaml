@@ -21,6 +21,6 @@ params:
     crosover_probability: 0.7
     tournament_size: 5
     selection_method: "tournament"  # "tournament" / "roulette"
-    mutation_method: ""  # "swap" / "inverse"
+    mutation_method: "swap"  # "swap" / "inverse"
     mutation_rate: 0.1  # Provide float in range [0,1]
   logs_output_path: output/
