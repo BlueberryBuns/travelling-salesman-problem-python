@@ -11,18 +11,14 @@ class Mutate:
     def mutate(self) -> Solutions:
         instances = self._get_instances_for_mutation()
         if self.mutation_method == "swap":
-            import ipdb; ipdb.set_trace()
             return self._swap(instances)
         elif self.mutation_method == "inverse":
-            import ipdb; ipdb.set_trace()
             return self._inverse(instances)
 
     def _swap(self, instances: np.ndarray) -> np.ndarray:
         for instance in instances:
             indexes = np.random.randint(len(instance), size=2) # 2 indexes to be swaped
-            import ipdb; ipdb.set_trace()
             instance[indexes[0]], instance[indexes[1]] = instance[indexes[1]], instance[indexes[0]]
-            ipdb.set_trace()
         return instances
 
     def _inverse(self, instances: np.ndarray) -> np.ndarray:

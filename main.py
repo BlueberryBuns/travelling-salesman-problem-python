@@ -61,7 +61,8 @@ def main():
 
         solutionss = create_solution()
 
-        mutated_solutions = Mutate(solutionss, config.genetic_mutation_method ,config.genetic_mutation_rate).mutate()
+        mutation = Mutate(solutionss, config.genetic_mutation_method ,config.genetic_mutation_rate)
+        mutation.mutate()
     import ipdb; ipdb.set_trace()
 
 if __name__ == "__main__":
