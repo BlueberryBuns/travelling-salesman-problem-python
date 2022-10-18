@@ -37,7 +37,7 @@ class InstanceLoader:
                 float(splitted_line[2]),
             )
             nodes.append(node)
-        return np.array(nodes, dtype=np.float16)
+        return np.array(nodes, dtype=float)
 
     @cached_property
     def info_dict(self) -> dict:
