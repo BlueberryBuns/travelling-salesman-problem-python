@@ -2,6 +2,7 @@ from functools import cached_property
 import numpy as np
 
 from tqdm import tqdm
+
 # from instance import Representation, Node
 from instance.representation import Repres
 
@@ -21,7 +22,7 @@ class InstanceLoader:
         representation = Repres(self._get_verticies(self.raw_nodes))
         return representation
 
-    def _get_verticies(self, raw_nodes: str) -> np.ndarray: #list[Node]:
+    def _get_verticies(self, raw_nodes: str) -> np.ndarray:  # list[Node]:
         nodes = []
 
         for line in raw_nodes.split("\n"):
