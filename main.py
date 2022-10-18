@@ -1,10 +1,7 @@
 from pathlib import Path
-<<<<<<< HEAD
-=======
 import time
 
 import numpy as np
->>>>>>> b76bfb5 (testing)
 from algorithms.greedy import GreedyAlgorithm
 from instance.representation import MatrixRepresentation
 from instance.solution import Solutions
@@ -40,8 +37,6 @@ def main():
     input_file = Path("example_instances/berlin11_modified.tsp")
     loader = InstanceLoader()
     config = ConfigLoader("config.yaml")
-<<<<<<< HEAD
-=======
 
     def create_solution() -> Solutions:
         sol = Solutions(cities=5, instances=5)
@@ -71,7 +66,6 @@ def main():
     import ipdb; ipdb.set_trace()
     # print(config._config)
     # import ipdb; ipdb.set_trace()
->>>>>>> b76bfb5 (testing)
 
     # print(config._config["genetic_algorithm"])
     # print(config._genetic_algorithm)
@@ -80,20 +74,10 @@ def main():
     # representation = loader.load(input_file)
     # print(representation.verticies_list)
 
-<<<<<<< HEAD
-    matrixRep = MatrixRepresentation(representation)
-
-    result = RandomAlgorithm(representation, matrixRep).execute()
-    print(result)
-=======
     # matrixRep = MatrixRepresentation(representation)
-    # print(matrixRep.adjacency_matix)
-    # import ipdb; ipdb.set_trace()
-    # logging_setup()
-    # logging.info("Test message")
+
     # result = RandomAlgorithm(representation, matrixRep).execute()
     # print(result)
->>>>>>> b76bfb5 (testing)
 
 
 if __name__ == "__main__":
