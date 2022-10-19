@@ -1,13 +1,10 @@
 import random
 import time
 
-from tqdm import tqdm
-
-# from instance import Node
 import numpy as np
 from numba import njit
 
-from instance.representation import MatrixRepresentation  # , Representation
+from instance.representation import MatrixRepresentation
 from instance.solution import Solutions
 
 from instance.selection import Selection
