@@ -1,16 +1,27 @@
 from functools import cached_property
 import logging
 import numpy as np
+from numba import njit
+from tqdm import tqdm
+
+from instance.representation import MatrixRepresentation
 
 
 class Solutions:
-    def __init__(self, cities: int, instances: int, init_method: str):
+    def __init__(
+        self,
+        cities: int,
+        instances: int,
+        init_method: str,
+        matrix_representation: MatrixRepresentation,
+    ):
         self.number_of_instances = instances
         self.number_of_cities = cities
         self.best_solution = np.zeros((cities), dtype=np.uint16)
         self.best_distance = np.Inf
         self.solution_array = self._initialize_solution_array(init_method)
         self.distance_array = np.zeros((instances, cities), dtype=np.float32)
+        self.matrix_representation = matrix_representation
 
     def _initialize_solution_array(self, method: str):
         try:
@@ -48,23 +59,23 @@ class Solutions:
                 "Number of cities cannot be lower than number of instances!"
             )
 
-    @cached_property
+    @property
     def total_length(self) -> np.ndarray:
         return self.distance_array.sum(axis=1, dtype=np.float32)
 
-    @cached_property
+    @property
     def min_value(self):
         return self.total_length.min()
 
-    @cached_property
+    @property
     def min_arg(self):
         return self.total_length.argmin()
 
-    @cached_property
+    @property
     def avg_value(self):
         return self.total_length.mean()
 
-    @cached_property
+    @property
     def max_value(self):
         return self.total_length.max()
 
@@ -77,3 +88,30 @@ class Solutions:
         if self.best_distance > self.min_value:
             self.best_distance = self.min_value
             self.best_solution = self.solution_array[self.min_arg]
+
+    @staticmethod
+    @njit
+    def calculate_distance_array(solution: np.ndarray, adjacency_array: np.ndarray):
+        result = np.zeros(len(solution))
+        for index, current_city in enumerate(solution):
+            next_city_index = (index + 1) % len(solution)
+            result[index] = adjacency_array[current_city][solution[next_city_index]]
+        return result
+
+    def calculate_distance_of_all_solutions(self):
+        for index, solution in enumerate(tqdm(self.solution_array)):
+            self.distance_array[index] = self.calculate_distance_array(
+                solution, self.matrix_representation.adjacency_matix
+            )
+
+    def validate(self):
+        ...
+
+    def log_to_csv(self):
+        ...
+
+    def evaluate(self):
+        self.calculate_distance_of_all_solutions()
+        self.validate()
+        self.update_best_solution()
+        self.log_to_csv()

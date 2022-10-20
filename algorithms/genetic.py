@@ -1,39 +1,37 @@
-import random
-import time
-
-import numpy as np
-from numba import njit
-
-from instance.representation import MatrixRepresentation
 from instance.solution import Solutions
 
+import ipdb
 from instance.selection import Selection
-from instance.mutations import Mutate
+from instance.mutations import Mutatation
 
 
 class GeneticAlgorithm:
     def __init__(
-        self, matrix_representation: MatrixRepresentation, solutions: Solutions
+        self,
+        solutions: Solutions,
+        selection: Selection,
+        mutation: Mutatation,
+        generations: int,
     ):
         self.solutions = solutions
-        self.matrix_representation = matrix_representation
+        self.mutation = mutation
+        self.selection = selection
+        self.generations = generations
 
     def execute(self):
-        current_gen = 0
-        best_specimen = None
-        best_cost = np.Inf
+        for _ in range(self.generations):
+            # ipdb.set_trace()
+            new_population = self.selection.select(
+                self.solutions.solution_array, self.solutions.total_length
+            )
 
-        # to w pętli
+            crossover_population = new_population  # TODO: change!
+            # ipdb.set_trace()
 
-        selected_solutions = Selection.select(
-            self.solutions.solution_array, self.solutions.distance_array
-        )
+            mutated_population = self.mutation.mutate(crossover_population)
+            # ipdb.set_trace()
 
-        # population = Crossovers.crossover(selected_solutions)
+            self.solutions.solution_array = mutated_population
+            self.solutions.evaluate()
 
-        population = Mutate.mutate(population)
-
-        # evaluation
-
-        current_gen += 1
-        return best_cost, best_specimen
+            ipdb.set_trace()

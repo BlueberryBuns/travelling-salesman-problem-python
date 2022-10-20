@@ -3,7 +3,7 @@ import numpy as np
 from numba import njit
 
 
-class Mutate:
+class Mutatation:
     def __init__(self, mutation_method: str, mutation_rate: float) -> None:
         # self.solutions = solutions
         self.mutation_method = mutation_method
@@ -11,7 +11,11 @@ class Mutate:
 
     def mutate(self, solutions_array: np.ndarray) -> np.ndarray:
         instances, altered_indexes = self._get_instances_for_mutation(solutions_array)
-        indexes = np.random.randint(len(instances[0]), size=(len(instances), 2))
+        # import ipdb; ipdb.set_trace()
+        if len(instances):
+            indexes = np.random.randint(len(instances[0]), size=(len(instances), 2))
+        else:
+            return solutions_array
         indexes.sort()
         if self.mutation_method == "swap":
             altered_solutions = self._swap(instances, indexes)
@@ -57,5 +61,5 @@ class Mutate:
         instances_for_mutation = solution_array[
             indexes_to_be_mutated, :
         ]  # to chyba niepotrzebne, potrzeba tylko indexów?
-
+        
         return instances_for_mutation, indexes_to_be_mutated

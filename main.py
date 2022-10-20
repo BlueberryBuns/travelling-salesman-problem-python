@@ -3,6 +3,7 @@ import time
 
 import numpy as np
 from algorithms import greedy
+from algorithms.genetic import GeneticAlgorithm
 from algorithms.greedy import GreedyAlgorithm
 from instance.representation import MatrixRepresentation
 from instance.solution import Solutions
@@ -10,7 +11,7 @@ from loader import InstanceLoader
 from loader.config import ConfigLoader
 from instance import MatrixRepresentation
 from algorithms import RandomAlgorithm
-from instance.mutations import Mutate
+from instance.mutations import Mutatation
 
 from instance.selection import Selection
 
@@ -21,12 +22,16 @@ def alt_main():
         loader = InstanceLoader(selected_instance)
         matrix_representation = MatrixRepresentation(loader.load())
         greedy_solutions = Solutions(
-            cities=loader.dimension, instances=loader.dimension, init_method="greedy"
+            cities=loader.dimension,
+            instances=loader.dimension,
+            init_method="greedy",
+            matrix_representation=matrix_representation,
         )
         random_solutions = Solutions(
             cities=loader.dimension,
             instances=config.random_number_of_instances,
             init_method=config.genetic_init_method,
+            matrix_representation=matrix_representation,
         )
         algorithm = GreedyAlgorithm(matrix_representation, greedy_solutions)
         algorithm_random = RandomAlgorithm(matrix_representation, random_solutions)
@@ -49,32 +54,45 @@ def main():
         loader = InstanceLoader(selected_instance)
         matrix_representation = MatrixRepresentation(loader.load())
 
-        random_solutions = Solutions(
+        solutions = Solutions(
             cities=loader.dimension,
-            instances=config.random_number_of_instances,
+            instances=config.genetic_population_size,
             init_method=config.genetic_init_method,
+            matrix_representation=matrix_representation,
         )
+
+        solutions.evaluate()
 
         selection = Selection(
             selection_method="tournament",
-            tournaments_number=50,
-            tournament_size=50,
-            population_size=100,
+            tournaments_number=config.genetic_population_size,
+            tournament_size=config.genetic_tournament_size,
+            population_size=config.genetic_population_size,
         )
 
-        population = random_solutions.solution_array  # init population
+        mutation = Mutatation(
+            mutation_method=config.genetic_mutation_method,
+            mutation_rate=config.genetic_mutation_rate,
+        )
 
-        evaluation = []  # ratings
+        genetic_algorithm = GeneticAlgorithm(
+            solutions=solutions, selection=selection, mutation=mutation, generations=config.genetic_generations
+        )
 
-        selected_solutions = selection.select(population, evaluation)
+        genetic_algorithm.execute()
+        # solutions.evaluate()
+        # population = solutions.solution_array  # init population
+        # evaluation = solutions.total_length  # ratings
+
+        # import ipdb
+
+        # selected_solutions = selection.select(population, evaluation)
+        # ipdb.set_trace()
 
         # mutation = Mutate(config.genetic_mutation_method, config.genetic_mutation_rate)
         # tmp = mutation.mutate(random_solutions.solution_array)
-    # import ipdb
-
-    # ipdb.set_trace()
 
 
 if __name__ == "__main__":
-    # main()
-    alt_main()
+    main()
+    # alt_main()

@@ -1,6 +1,8 @@
 import random
 from instance.solution import Solutions
 import numpy as np
+import ipdb
+from numba import njit
 
 
 class Selection:
@@ -19,28 +21,26 @@ class Selection:
     def select(
         self, solutions_array: np.ndarray, rating_array: list[float]
     ) -> np.ndarray:
-        selected_solutions = []
+        selected_solutions = np.zeros(solutions_array.shape)
         if self.selection_method == "tournament":
             for turn in range(self.tournaments_number):
+                # ipdb.set_trace()
                 selected_solution = self._tournament(solutions_array, rating_array)
-                selected_solutions.append(selected_solution)
+                selected_solutions[turn] = selected_solution
+            return selected_solutions.astype(int)
         elif self.selection_method == "roulette":
+            raise NotImplementedError
             for turn in range():
                 selected_solution = self._roulette()
                 selected_solutions.append(selected_solution)
 
-    def _tournament(self, solutions_array: np.ndarray, distance_array: list[float]):
-        best = 0
-        best_index = None
+    def _tournament(self, solutions_array: np.ndarray, distance_array: np.ndarray):
         selected_indexes = random.sample(
             range(self.population_size), self.tournament_size
         )
-
-        for specimen_index in selected_indexes:
-            if best < distance_array[best_index]:
-                best_index = specimen_index
-                best = distance_array[best_index]
-
+        # ipdb.set_trace()
+        current_minimal = distance_array[selected_indexes].min()
+        best_index = np.where(distance_array == current_minimal)[0][0]
         return solutions_array[best_index]
 
     # to be implemented later
