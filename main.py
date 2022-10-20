@@ -2,6 +2,7 @@ from pathlib import Path
 import time
 
 import numpy as np
+from algorithms import greedy
 from algorithms.greedy import GreedyAlgorithm
 from instance.representation import MatrixRepresentation
 from instance.solution import Solutions
@@ -19,24 +20,29 @@ def alt_main():
     for selected_instance in config.selected_instances:
         loader = InstanceLoader(selected_instance)
         matrix_representation = MatrixRepresentation(loader.load())
-        # greedy_solutions = Solutions(
-        #     cities=loader.dimension, instances=loader.dimension, init_method="greedy"
-        # )
+        greedy_solutions = Solutions(
+            cities=loader.dimension, instances=loader.dimension, init_method="greedy"
+        )
         random_solutions = Solutions(
             cities=loader.dimension,
             instances=config.random_number_of_instances,
             init_method=config.genetic_init_method,
         )
-        # algorithm_1 = GreedyAlgorithm(matrix_representation, greedy_solutions)
-        algorithm = RandomAlgorithm(matrix_representation, random_solutions)
+        algorithm = GreedyAlgorithm(matrix_representation, greedy_solutions)
+        algorithm_random = RandomAlgorithm(matrix_representation, random_solutions)
         algorithm.execute()
+        algorithm_random.execute()
         random_solutions.update_best_solution()
         print(f"{random_solutions.best_solution=}")
         print(f"{random_solutions.best_distance=}")
+        greedy_solutions.update_best_solution()
+        print(f"{greedy_solutions.best_solution=}")
+        print(f"{greedy_solutions.best_distance=}")
+        algorithm.print_matrix()
 
 
 def main():
-    
+
     config = ConfigLoader("config.yaml")
 
     for selected_instance in config.selected_instances:
@@ -50,15 +56,15 @@ def main():
         )
 
         selection = Selection(
-            selection_method = "tournament",
-            tournaments_number = 50,
-            tournament_size = 50,
-            population_size = 100
+            selection_method="tournament",
+            tournaments_number=50,
+            tournament_size=50,
+            population_size=100,
         )
 
-        population = random_solutions.solution_array #init population
+        population = random_solutions.solution_array  # init population
 
-        evaluation = [] # ratings
+        evaluation = []  # ratings
 
         selected_solutions = selection.select(population, evaluation)
 
@@ -70,5 +76,5 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
-    # alt_main()
+    # main()
+    alt_main()

@@ -4,13 +4,21 @@ import numpy as np
 
 
 class Selection:
-    def __init__(self, selection_method: str, tournaments_number: int, population_size: int, tournament_size: int) -> None:
+    def __init__(
+        self,
+        selection_method: str,
+        tournaments_number: int,
+        population_size: int,
+        tournament_size: int,
+    ) -> None:
         self.selection_method = selection_method
         self.tournaments_number = tournaments_number
         self.tournament_size = tournament_size
         self.population_size = population_size
 
-    def select(self, solutions_array: np.ndarray, rating_array: list[float]) -> np.ndarray:
+    def select(
+        self, solutions_array: np.ndarray, rating_array: list[float]
+    ) -> np.ndarray:
         selected_solutions = []
         if self.selection_method == "tournament":
             for turn in range(self.tournaments_number):
@@ -22,9 +30,11 @@ class Selection:
                 selected_solutions.append(selected_solution)
 
     def _tournament(self, solutions_array: np.ndarray, distance_array: list[float]):
-        best = -np.Inf
+        best = 0
         best_index = None
-        selected_indexes = random.sample(range(self.population_size), self.tournament_size)
+        selected_indexes = random.sample(
+            range(self.population_size), self.tournament_size
+        )
 
         for specimen_index in selected_indexes:
             if best < distance_array[best_index]:

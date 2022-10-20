@@ -1,7 +1,6 @@
 from functools import cached_property
 
 import numpy as np
-import numpy.ma as ma
 from algorithms.base import BaseTSPAlgorithm
 from instance.representation import MatrixRepresentation
 from instance.solution import Solutions
@@ -17,6 +16,9 @@ class GreedyAlgorithm(BaseTSPAlgorithm):
     @cached_property
     def cities_count(self) -> int:
         return len(self.adjacency_matrix)
+
+    def print_matrix(self):
+        print(self.adjacency_matrix)
 
     @cached_property
     def cities(self) -> np.ndarray:

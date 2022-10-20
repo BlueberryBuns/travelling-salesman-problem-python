@@ -23,9 +23,11 @@ class GeneticAlgorithm:
         best_specimen = None
         best_cost = np.Inf
 
-        #to w pętli 
-        
-        selected_solutions = Selection.select(self.solutions.solution_array, self.solutions.distance_array)
+        # to w pętli
+
+        selected_solutions = Selection.select(
+            self.solutions.solution_array, self.solutions.distance_array
+        )
 
         # population = Crossovers.crossover(selected_solutions)
 
