@@ -24,7 +24,6 @@ def get_final_value_from_mapping(mapped_values_0: np.ndarray, mapped_values_1: n
             continue_discovery = False
     return current_value
 
-
 class PMX(BaseCrossover):
     def __init__(self):
         ...
@@ -91,14 +90,12 @@ class OX(BaseCrossover):
             if custom_iterator == cut_a:
                 mapping_length = cut_b - cut_a
                 custom_iterator += mapping_length
-
             if city in new_solution[cut_a:cut_b]:
                 continue
             else:
                 new_solution[custom_iterator] = city
                 custom_iterator += 1
         return new_solution
-
 
 x = np.arange(100, dtype=int)
 y = np.arange(100, dtype=int)[::-1]
