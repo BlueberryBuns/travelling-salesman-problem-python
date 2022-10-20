@@ -11,6 +11,8 @@ from instance import MatrixRepresentation
 from algorithms import RandomAlgorithm
 from instance.mutations import Mutate
 
+from instance.selection import Selection
+
 
 def alt_main():
     config = ConfigLoader("config.yaml")
@@ -40,16 +42,31 @@ def main():
     for selected_instance in config.selected_instances:
         loader = InstanceLoader(selected_instance)
         matrix_representation = MatrixRepresentation(loader.load())
+
         random_solutions = Solutions(
             cities=loader.dimension,
             instances=config.random_number_of_instances,
             init_method=config.genetic_init_method,
         )
-        mutation = Mutate(config.genetic_mutation_method, config.genetic_mutation_rate)
-        tmp = mutation.mutate(random_solutions.solution_array)
-    import ipdb
 
-    ipdb.set_trace()
+        selection = Selection(
+            selection_method = "tournament",
+            tournaments_number = 50,
+            tournament_size = 50,
+            population_size = 100
+        )
+
+        population = random_solutions.solution_array #init population
+
+        evaluation = [] # ratings
+
+        selected_solutions = selection.select(population, evaluation)
+
+        # mutation = Mutate(config.genetic_mutation_method, config.genetic_mutation_rate)
+        # tmp = mutation.mutate(random_solutions.solution_array)
+    # import ipdb
+
+    # ipdb.set_trace()
 
 
 if __name__ == "__main__":
