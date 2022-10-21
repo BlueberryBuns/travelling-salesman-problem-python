@@ -1,3 +1,6 @@
+import logging
+
+from tqdm import tqdm
 from instance.crosovers import BaseCrossover
 from instance.solution import Solutions
 
@@ -22,7 +25,8 @@ class GeneticAlgorithm:
         self.generations = generations
 
     def execute(self):
-        for _ in range(self.generations):
+        logging.warning("Running genetic algorithm")
+        for _ in tqdm(range(self.generations)):
             # ipdb.set_trace()
             new_population = self.selection.select(
                 self.solutions.solution_array, self.solutions.total_length
