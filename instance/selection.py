@@ -53,7 +53,7 @@ class Selection:
         rand = random.random()
 
         arr = np.asarray(prob_list)
-        i = (np.abs(arr - rand)).argmin()
+        i = (np.abs(arr - rand)).argmin() # znajduje index wartości najbliższej do rand, czyli ten ktory został wylosowany
         # found_index = np.where(solutions_array==i) # nie zwraca indexu
         
 
