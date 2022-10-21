@@ -32,6 +32,9 @@ class GeneticAlgorithm:
                 self.solutions.solution_array, self.solutions.total_length
             )
 
+            ipdb.set_trace()
+
+
             crossover_population = self.crossover.execute(new_population)  # TODO: change!
             # ipdb.set_trace()
 

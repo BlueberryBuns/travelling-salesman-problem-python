@@ -1,6 +1,8 @@
 from pathlib import Path
 import time
 
+import ipdb
+
 import numpy as np
 from algorithms import greedy
 from algorithms.genetic import GeneticAlgorithm
@@ -65,11 +67,12 @@ def main():
         solutions.evaluate()
 
         selection = Selection(
-            selection_method="tournament",
+            selection_method=config.genetic_selection_method,
             tournaments_number=config.genetic_population_size,
             tournament_size=config.genetic_tournament_size,
             population_size=config.genetic_population_size,
         )
+
 
         mutation = Mutatation(
             mutation_method=config.genetic_mutation_method,

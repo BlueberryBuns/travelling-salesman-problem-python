@@ -32,6 +32,7 @@ class Selection:
             for turn in range(self.population_size):
                 selected_solution = self._roulette(solutions_array, rating_array)
                 selected_solutions[turn] = selected_solution
+            return selected_solutions.astype(int)
 
     def _tournament(self, solutions_array: np.ndarray, distance_array: np.ndarray):
         selected_indexes = random.sample(
@@ -43,5 +44,29 @@ class Selection:
 
     # to be implemented later
     def _roulette(self, solutions_array: np.ndarray, rating_array: np.ndarray):
+        total_fit = rating_array.sum()
+
+        prob_list = [eva / total_fit for eva in rating_array]
+
+        # sorted_list = sorted(prob_list)
+
+        rand = random.random()
+
+        arr = np.asarray(prob_list)
+        i = (np.abs(arr - rand)).argmin() # znajduje index wartości najbliższej do rand, czyli ten ktory został wylosowany
+        # found_index = np.where(solutions_array==i) # nie zwraca indexu
         
-        return solutions_array[best_index]
+
+        ipdb.set_trace()
+
+        return solutions_array[i]
+
+        # for prob_i in range(len(prob_list)):
+            
+
+        #     if rand <= prob_list[prob_i] and rand > prob_list[prob_i+1]:
+        #         return solutions_array[prob_i]
+
+#                 arr = np.asarray(input_list)
+ 
+#   i = (np.abs(arr - input_value)).argmin()
