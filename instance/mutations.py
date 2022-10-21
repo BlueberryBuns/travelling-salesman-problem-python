@@ -61,5 +61,5 @@ class Mutatation:
         instances_for_mutation = solution_array[
             indexes_to_be_mutated, :
         ]  # to chyba niepotrzebne, potrzeba tylko indexów?
-        
+
         return instances_for_mutation, indexes_to_be_mutated

@@ -99,7 +99,7 @@ class Solutions:
         return result
 
     def calculate_distance_of_all_solutions(self):
-        for index, solution in enumerate(tqdm(self.solution_array)):
+        for index, solution in enumerate(self.solution_array):
             self.distance_array[index] = self.calculate_distance_array(
                 solution, self.matrix_representation.adjacency_matix
             )

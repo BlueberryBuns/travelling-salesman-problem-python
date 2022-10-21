@@ -1,3 +1,4 @@
+from instance.crosovers import BaseCrossover
 from instance.solution import Solutions
 
 import ipdb
@@ -11,11 +12,13 @@ class GeneticAlgorithm:
         solutions: Solutions,
         selection: Selection,
         mutation: Mutatation,
+        crossover: BaseCrossover,
         generations: int,
     ):
         self.solutions = solutions
         self.mutation = mutation
         self.selection = selection
+        self.crossover = crossover
         self.generations = generations
 
     def execute(self):
@@ -25,7 +28,7 @@ class GeneticAlgorithm:
                 self.solutions.solution_array, self.solutions.total_length
             )
 
-            crossover_population = new_population  # TODO: change!
+            crossover_population = self.crossover.execute(new_population)  # TODO: change!
             # ipdb.set_trace()
 
             mutated_population = self.mutation.mutate(crossover_population)
@@ -34,4 +37,4 @@ class GeneticAlgorithm:
             self.solutions.solution_array = mutated_population
             self.solutions.evaluate()
 
-            ipdb.set_trace()
+        ipdb.set_trace()

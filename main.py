@@ -5,6 +5,7 @@ import numpy as np
 from algorithms import greedy
 from algorithms.genetic import GeneticAlgorithm
 from algorithms.greedy import GreedyAlgorithm
+from instance.crosovers import OX, PMX
 from instance.representation import MatrixRepresentation
 from instance.solution import Solutions
 from loader import InstanceLoader
@@ -75,8 +76,15 @@ def main():
             mutation_rate=config.genetic_mutation_rate,
         )
 
+        ox = OX()
+        pmx = PMX()
+
         genetic_algorithm = GeneticAlgorithm(
-            solutions=solutions, selection=selection, mutation=mutation, generations=config.genetic_generations
+            solutions=solutions,
+            selection=selection,
+            mutation=mutation,
+            generations=config.genetic_generations,
+            crossover=ox,
         )
 
         genetic_algorithm.execute()
