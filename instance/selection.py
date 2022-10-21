@@ -29,20 +29,19 @@ class Selection:
                 selected_solutions[turn] = selected_solution
             return selected_solutions.astype(int)
         elif self.selection_method == "roulette":
-            raise NotImplementedError
-            for turn in range():
-                selected_solution = self._roulette()
-                selected_solutions.append(selected_solution)
+            for turn in range(self.population_size):
+                selected_solution = self._roulette(solutions_array, rating_array)
+                selected_solutions[turn] = selected_solution
 
     def _tournament(self, solutions_array: np.ndarray, distance_array: np.ndarray):
         selected_indexes = random.sample(
             range(self.population_size), self.tournament_size
         )
-        # ipdb.set_trace()
         current_minimal = distance_array[selected_indexes].min()
         best_index = np.where(distance_array == current_minimal)[0][0]
         return solutions_array[best_index]
 
     # to be implemented later
-    def _roulette():
-        return None
+    def _roulette(self, solutions_array: np.ndarray, rating_array: np.ndarray):
+        
+        return solutions_array[best_index]
