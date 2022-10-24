@@ -19,9 +19,10 @@ class Solutions:
         matrix_representation: MatrixRepresentation,
         method: str,
         config: ConfigLoader,
-        instance: str,
+        instance: str
     ):
         self.index = 0
+        self.method = method
         self._filename = self._create_filename(method, config, instance)
         self.results_df = pd.DataFrame(columns=["index", "best", "worst", "avg"])
         self.number_of_instances = instances
@@ -44,7 +45,7 @@ class Solutions:
             filename = f"results__{method}__{instance_name}__exec_{config.genetic_executions}__popsize_{config.genetic_population_size}__generations_{config.genetic_generations}__crossover_{config.genetic_crosover_method}__cross_probability_{config.genetic_crosover_probability}__selection_method_{str(config.genetic_tournament_size) + '_' + config.genetic_selection_method if config.genetic_selection_method == 'tournament' else config.genetic_selection_method}__mutation_rate_{config.genetic_mutation_rate}__mutation_{config.genetic_mutation_method}.csv"
 
         with open(filename, "w") as f:
-            f.write("index,best,worst,avg,current_best")
+            f.write("index,best,worst,avg,current_best\n")
         return filename
 
     def _initialize_solution_array(self, method: str):

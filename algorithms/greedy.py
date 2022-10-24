@@ -56,3 +56,4 @@ class GreedyAlgorithm(BaseTSPAlgorithm):
             ] = next_city
 
         self.solutions.update_best_solution()
+        self.solutions.log_to_csv()

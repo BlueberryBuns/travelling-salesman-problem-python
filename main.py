@@ -96,27 +96,32 @@ def main():
 
         genetic_algorithm.execute()
 
-        greedy_solutions = Solutions(
-            cities=loader.dimension,
-            instances=loader.dimension,
-            init_method="greedy",
-            matrix_representation=matrix_representation,
-            method="greedy",
-            config=config,
-            instance=selected_instance
-        )
+        # greedy_solutions = Solutions(
+        #     cities=loader.dimension,
+        #     instances=loader.dimension,
+        #     init_method="greedy",
+        #     matrix_representation=matrix_representation,
+        #     method="greedy",
+        #     config=config,
+        #     instance=selected_instance
+        # )
 
-        random_solutions = Solutions(
-            cities=loader.dimension,
-            instances=config.random_number_of_instances,
-            init_method="random",
-            matrix_representation=matrix_representation,
-            method="random",
-            config=config,
-            instance=selected_instance
-        )
+        # random_solutions = Solutions(
+        #     cities=loader.dimension,
+        #     instances=config.random_number_of_instances,
+        #     init_method="random",
+        #     matrix_representation=matrix_representation,
+        #     method="random",
+        #     config=config,
+        #     instance=selected_instance
+        # )
 
-        greedy = GreedyAlgorithm(matrix_representation, greedy_solutions)
+        # random = RandomAlgorithm(matrix_representation, random_solutions)
+        # greedy = GreedyAlgorithm(matrix_representation, greedy_solutions)
+
+        # random.execute()
+        # greedy.execute()
+
         # solutions.evaluate()
         # population = solutions.solution_array  # init population
         # evaluation = solutions.total_length  # ratings

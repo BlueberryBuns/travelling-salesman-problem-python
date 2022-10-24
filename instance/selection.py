@@ -56,10 +56,6 @@ class Selection:
         ).argmin()  # znajduje index wartości najbliższej do rand, czyli ten ktory został wylosowany
         # found_index = np.where(solutions_array==i) # nie zwraca indexu
 
-        ipdb.set_trace()
-        if len(i) > 2:
-            i = i[0]
-
         return solutions_array[i]
 
         # for prob_i in range(len(prob_list)):

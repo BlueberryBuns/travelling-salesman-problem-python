@@ -23,6 +23,8 @@ class RandomAlgorithm:
             self.solutions.distance_array[index] = self.calculate_distance_array(
                 solution, self.matrix_representation.adjacency_matix
             )
+        self.solutions.update_best_solution()
+        self.solutions.log_to_csv()
 
     @staticmethod
     @njit
