@@ -27,21 +27,13 @@ class GeneticAlgorithm:
     def execute(self):
         logging.warning("Running genetic algorithm")
         for _ in tqdm(range(self.generations)):
-            # ipdb.set_trace()
             new_population = self.selection.select(
                 self.solutions.solution_array, self.solutions.total_length
             )
-
-            ipdb.set_trace()
-
-
-            crossover_population = self.crossover.execute(new_population)  # TODO: change!
-            # ipdb.set_trace()
-
+            crossover_population = self.crossover.execute(
+                new_population
+            )  # TODO: change!
             mutated_population = self.mutation.mutate(crossover_population)
-            # ipdb.set_trace()
 
             self.solutions.solution_array = mutated_population
             self.solutions.evaluate()
-
-        ipdb.set_trace()

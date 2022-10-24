@@ -1,8 +1,6 @@
 import random
-from instance.solution import Solutions
 import numpy as np
 import ipdb
-from numba import njit
 
 
 class Selection:
@@ -53,20 +51,23 @@ class Selection:
         rand = random.random()
 
         arr = np.asarray(prob_list)
-        i = (np.abs(arr - rand)).argmin() # znajduje index wartości najbliższej do rand, czyli ten ktory został wylosowany
+        i = (
+            np.abs(arr - rand)
+        ).argmin()  # znajduje index wartości najbliższej do rand, czyli ten ktory został wylosowany
         # found_index = np.where(solutions_array==i) # nie zwraca indexu
-        
 
         ipdb.set_trace()
+        if len(i) > 2:
+            i = i[0]
 
         return solutions_array[i]
 
         # for prob_i in range(len(prob_list)):
-            
 
         #     if rand <= prob_list[prob_i] and rand > prob_list[prob_i+1]:
         #         return solutions_array[prob_i]
 
+
 #                 arr = np.asarray(input_list)
- 
+
 #   i = (np.abs(arr - input_value)).argmin()

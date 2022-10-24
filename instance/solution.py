@@ -1,10 +1,13 @@
 from functools import cached_property
 import logging
+import os
 import numpy as np
 from numba import njit
+import pandas as pd
 from tqdm import tqdm
 
 from instance.representation import MatrixRepresentation
+from loader.config import ConfigLoader
 
 
 class Solutions:
@@ -14,7 +17,13 @@ class Solutions:
         instances: int,
         init_method: str,
         matrix_representation: MatrixRepresentation,
+        method: str,
+        config: ConfigLoader,
+        instance: str,
     ):
+        self.index = 0
+        self._filename = self._create_filename(method, config, instance)
+        self.results_df = pd.DataFrame(columns=["index", "best", "worst", "avg"])
         self.number_of_instances = instances
         self.number_of_cities = cities
         self.best_solution = np.zeros((cities), dtype=np.uint16)
@@ -22,6 +31,21 @@ class Solutions:
         self.solution_array = self._initialize_solution_array(init_method)
         self.distance_array = np.zeros((instances, cities), dtype=np.float32)
         self.matrix_representation = matrix_representation
+
+    def _create_filename(self, method: str, config: ConfigLoader, instance: str):
+        instance_name = os.path.basename(instance).split(".")[0]
+        filename = "dummy.csv"
+        if method == "random":
+            noi = config.random_number_of_instances
+            filename =f"results__{method}__{instance_name}__noi_{noi}.csv"
+        if method == "greedy":
+            filename = f"results__{method}__{instance_name}.csv"
+        if method == "genetic":
+            filename = f"results__{method}__{instance_name}__exec_{config.genetic_executions}__popsize_{config.genetic_population_size}__generations_{config.genetic_generations}__crossover_{config.genetic_crosover_method}__cross_probability_{config.genetic_crosover_probability}__selection_method_{str(config.genetic_tournament_size) + '_' + config.genetic_selection_method if config.genetic_selection_method == 'tournament' else config.genetic_selection_method}__mutation_rate_{config.genetic_mutation_rate}__mutation_{config.genetic_mutation_method}.csv"
+
+        with open(filename, "w") as f:
+            f.write("index,best,worst,avg,current_best")
+        return filename
 
     def _initialize_solution_array(self, method: str):
         try:
@@ -43,14 +67,14 @@ class Solutions:
 
     def greedy_init(self, n_instances, n_cities):
         if n_cities == n_instances:
-            logging.info(
+            logging.warning(
                 "Number of instances == number of cities, performing greedy search"
             )
             return np.zeros(
-                (self.number_of_instances, self.number_of_cities), dtype=np.uint16
+                (self.number_of_instances, self.number_of_cities), dtype=float
             )
         elif n_instances > n_cities:
-            logging.info(
+            logging.warning(
                 "Number of instances > number of cities, performing greedy search, filling remaining data with random search"
             )
             raise NotImplementedError
@@ -104,14 +128,19 @@ class Solutions:
                 solution, self.matrix_representation.adjacency_matix
             )
 
-    def validate(self):
-        ...
+    # def validate(self):
+    #     ...
+
+    def dataframe_update(self) -> str:
+        self.index += 1
+        return f"{self.index},{self.best_distance},{self.max_value},{self.avg_value},{self.min_value}\n"
 
     def log_to_csv(self):
-        ...
+        with open(self._filename, "a") as f:
+            f.write(self.dataframe_update())
 
     def evaluate(self):
         self.calculate_distance_of_all_solutions()
-        self.validate()
+        # self.validate()
         self.update_best_solution()
         self.log_to_csv()

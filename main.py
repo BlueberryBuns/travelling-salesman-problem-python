@@ -62,6 +62,9 @@ def main():
             instances=config.genetic_population_size,
             init_method=config.genetic_init_method,
             matrix_representation=matrix_representation,
+            method="genetic",
+            config=config,
+            instance=selected_instance
         )
 
         solutions.evaluate()
@@ -70,27 +73,50 @@ def main():
             selection_method=config.genetic_selection_method,
             tournaments_number=config.genetic_population_size,
             tournament_size=config.genetic_tournament_size,
-            population_size=config.genetic_population_size,
+            population_size=config.genetic_population_size
         )
-
 
         mutation = Mutatation(
             mutation_method=config.genetic_mutation_method,
             mutation_rate=config.genetic_mutation_rate,
         )
 
-        ox = OX()
-        pmx = PMX()
+        crossover = {
+            "ox": OX(config.genetic_crosover_probability),
+            "pmx": PMX(config.genetic_crosover_probability)
+        }[config.genetic_crosover_method.lower()]
 
         genetic_algorithm = GeneticAlgorithm(
             solutions=solutions,
             selection=selection,
             mutation=mutation,
             generations=config.genetic_generations,
-            crossover=ox,
+            crossover=crossover,
         )
 
         genetic_algorithm.execute()
+
+        greedy_solutions = Solutions(
+            cities=loader.dimension,
+            instances=loader.dimension,
+            init_method="greedy",
+            matrix_representation=matrix_representation,
+            method="greedy",
+            config=config,
+            instance=selected_instance
+        )
+
+        random_solutions = Solutions(
+            cities=loader.dimension,
+            instances=config.random_number_of_instances,
+            init_method="random",
+            matrix_representation=matrix_representation,
+            method="random",
+            config=config,
+            instance=selected_instance
+        )
+
+        greedy = GreedyAlgorithm(matrix_representation, greedy_solutions)
         # solutions.evaluate()
         # population = solutions.solution_array  # init population
         # evaluation = solutions.total_length  # ratings

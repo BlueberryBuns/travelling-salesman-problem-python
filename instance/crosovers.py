@@ -5,8 +5,8 @@ import time
 import numpy as np
 from numba import njit
 
-class BaseCrossover:
 
+class BaseCrossover:
     @abstractmethod
     def crossover(solution_a: np.ndarray, solution_b: np.ndarray) -> np.ndarray:
         raise NotImplementedError
@@ -15,10 +15,11 @@ class BaseCrossover:
         indexes = np.arange(len(population))
         np.random.shuffle(indexes)
         for i in range(1, len(indexes), 2):
-            population[i-1], population[i] = self.crossover(population[i-1], population[i])
+            population[i - 1], population[i] = self.crossover(
+                population[i - 1], population[i]
+            )
             # Last one (unaltered) is not overwritten if the population size is odd
         return population
-
 
 
 @njit
@@ -37,19 +38,23 @@ def get_final_value_from_mapping(
 
 
 class PMX(BaseCrossover):
-    def __init__(self):
-        ...
+    def __init__(self, crossover_probability):
+        self.crossover_probability = crossover_probability
 
     def crossover(
-        self, solution_a: np.ndarray, solution_b: np.ndarray
+        self,
+        solution_a: np.ndarray,
+        solution_b: np.ndarray
     ) -> list[np.ndarray]:
-        total_length = solution_a.shape[0]
-        cut_a = random.randint(0, total_length - 3)
-        cut_b = random.randint(cut_a + 1, total_length)
-        solution_1, solution_2 = self._alter_solutions(
-            solution_a, solution_b, cut_a, cut_b
-        )
-        return [solution_1.astype(int), solution_2.astype(int)]
+        if random.random() > self.crossover_probability:
+            total_length = solution_a.shape[0]
+            cut_a = random.randint(0, total_length - 3)
+            cut_b = random.randint(cut_a + 1, total_length)
+            solution_1, solution_2 = self._alter_solutions(
+                solution_a, solution_b, cut_a, cut_b
+            )
+            return [solution_1.astype(int), solution_2.astype(int)]
+        return [solution_a.astype(int), solution_b.astype(int)]
 
     @staticmethod
     @njit
@@ -86,18 +91,23 @@ class PMX(BaseCrossover):
 
 
 class OX(BaseCrossover):
-    def __init__(self):
-        ...
+    def __init__(self, crossover_probability):
+        self.crossover_probability = crossover_probability
+
 
     def crossover(
-        self, solution_a: np.ndarray, solution_b: np.ndarray
+        self,
+        solution_a: np.ndarray,
+        solution_b: np.ndarray
     ) -> list[np.ndarray]:
-        total_length = solution_a.shape[0]
-        cut_a = random.randint(0, total_length - 3)
-        cut_b = random.randint(cut_a + 1, total_length - 1)
-        new_solution_a = self._alter_solutions(solution_a, solution_b, cut_a, cut_b)
-        new_solution_b = self._alter_solutions(solution_b, solution_a, cut_a, cut_b)
-        return [new_solution_a.astype(int), new_solution_b.astype(int)]
+        if random.random() > self.crossover_probability:
+            total_length = solution_a.shape[0]
+            cut_a = random.randint(0, total_length - 3)
+            cut_b = random.randint(cut_a + 1, total_length - 1)
+            new_solution_a = self._alter_solutions(solution_a, solution_b, cut_a, cut_b)
+            new_solution_b = self._alter_solutions(solution_b, solution_a, cut_a, cut_b)
+            return [new_solution_a.astype(int), new_solution_b.astype(int)]
+        return [solution_a.astype(int), solution_b.astype(int)]
 
     @staticmethod
     @njit
